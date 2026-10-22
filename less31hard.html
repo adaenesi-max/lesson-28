@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name List System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        li {
+            padding: 8px;
+        }
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        #message {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Name List System</h1>
+
+        <!-- Form to add names -->
+        <form id="nameForm">
+            <label for="nameInput">Enter a name:</label><br>
+            <input type="text" id="nameInput" placeholder="Enter a name">
+            <button type="submit">Add Name</button>
+        </form>
+
+        <h2>Search for a Name</h2>
+        <input type="text" id="searchInput" placeholder="Search a name">
+        <button type="button" onclick="searchName()">Search</button>
+
+        <p id="message"></p>
+
+        <h2>Names List</h2>
+        <ul id="nameList"></ul>
+    </div>
+
+    <script>
+        // Array to store names
+        let names = [];
+
+        // Add a name to the array
+        document.getElementById("nameForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("nameInput").value.trim();
+
+            if (name !== "") {
+                names.push(name);
+                document.getElementById("nameInput").value = "";
+                displayNames();
+                document.getElementById("message").textContent = "";
+            } else {
+                alert("Please enter a name.");
+            }
+        });
+
+        // Display all names using a loop
+        function displayNames(searchTerm = "") {
+            let list = document.getElementById("nameList");
+            list.innerHTML = "";
+
+            for (let i = 0; i < names.length; i++) {
+                let item = document.createElement("li");
+                item.textContent = names[i];
+
+                // Highlight matching names
+                if (
+                    searchTerm !== "" &&
+                    names[i].toLowerCase() === searchTerm.toLowerCase()
+                ) {
+                    item.classList.add("highlight");
+                }
+
+                list.appendChild(item);
+            }
+        }
+
+        // Search for a name and highlight it
+        function searchName() {
+            let searchTerm = document.getElementById("searchInput").value.trim();
+            let message = document.getElementById("message");
+
+            if (searchTerm === "") {
+                message.textContent = "Please enter a name to search.";
+                displayNames();
+                return;
+            }
+
+            let found = false;
+
+            for (let i = 0; i < names.length; i++) {
+                if (names[i].toLowerCase() === searchTerm.toLowerCase()) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                message.textContent = "Name found!";
+                displayNames(searchTerm);
+            } else {
+                message.textContent = "Name not found.";
+                displayNames();
+            }
+        }
+    </script>
+
+</body>
+</html>
