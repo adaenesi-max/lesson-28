@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .circle {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .rectangle {
+            width: 150px;
+            height: 80px;
+            background-color: blue;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid green;
+        }
+
+        .shape {
+            display: inline-block;
+            margin: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="addShape('circle')">Circle</button>
+    <button onclick="addShape('rectangle')">Rectangle</button>
+    <button onclick="addShape('triangle')">Triangle</button>
+
+    <div id="container"></div>
+
+    <script>
+        function addShape(type) {
+            let shape = document.createElement("div");
+            shape.classList.add("shape", type);
+
+            shape.onclick = function() {
+                shape.remove();
+            };
+
+            document.getElementById("container").appendChild(shape);
+        }
+    </script>
+
+</body>
+</html>

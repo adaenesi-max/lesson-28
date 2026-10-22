@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="teksti">Ky është një tekst.</p>
+
+<button onclick="ndryshoNgjyren()">Kliko këtu</button>
+
+<script>
+function ndryshoNgjyren() {
+    document.getElementById("teksti").style.color = "red";
+}
+</script>
+
+</body>
+</html>
