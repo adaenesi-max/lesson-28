@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock and Alarm</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f4f8;
+            padding: 40px;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #clock {
+            font-size: 40px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 20px 0;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Digital Clock</h1>
+
+        <div id="clock">00:00:00</div>
+
+        <h2>Set an Alarm</h2>
+
+        <input type="time" id="alarmTime" step="1">
+        <br>
+
+        <button onclick="setAlarm()">Set Alarm</button>
+        <button onclick="stopAlarm()">Stop Alarm</button>
+
+        <p id="alarmStatus">No alarm set.</p>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let alarmTime = null;
+        let alarmTriggered = false;
+
+        // Display the current time
+        function updateClock() {
+            const now = new Date();
+
+            const hours = String(now.getHours()).padStart(2, "0");
+            const minutes = String(now.getMinutes()).padStart(2, "0");
+            const seconds = String(now.getSeconds()).padStart(2, "0");
+
+            const currentTime = hours + ":" + minutes + ":" + seconds;
+
+            document.getElementById("clock").textContent = currentTime;
+
+            // Check whether the alarm time has arrived
+            if (alarmTime === currentTime && !alarmTriggered) {
+                alarmTriggered = true;
+
+                document.getElementById("message").textContent =
+                    "Alarm! The time is " + currentTime + "!";
+
+                alert("Alarm! The time is " + currentTime + "!");
+            }
+        }
+
+        // Set the alarm
+        function setAlarm() {
+            const selectedTime =
+                document.getElementById("alarmTime").value;
+
+            if (selectedTime === "") {
+                alert("Please select an alarm time.");
+                return;
+            }
+
+            alarmTime = selectedTime;
+            alarmTriggered = false;
+
+            document.getElementById("alarmStatus").textContent =
+                "Alarm set for " + alarmTime;
+
+            document.getElementById("message").textContent = "";
+        }
+
+        // Stop or cancel the alarm
+        function stopAlarm() {
+            alarmTime = null;
+            alarmTriggered = false;
+
+            document.getElementById("alarmStatus").textContent =
+                "No alarm set.";
+
+            document.getElementById("message").textContent =
+                "Alarm stopped or cancelled.";
+        }
+
+        // Update the clock every second
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+
+</body>
+</html>
